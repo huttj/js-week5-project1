@@ -23,7 +23,7 @@
 
 <body>
 
-
+    <a href="https://google.com">Google</a>
 
     <!-- Page Header -->
     <header class="intro-header" style="background-image: url('img/hero.jpg')">
@@ -43,22 +43,26 @@
     <main "container">
         <div class="row">
             <div class="col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
-                <div id="addNew">
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-6">
 
-                            <input type="text" id="addName" class="fullwidth" placeholder="Additional item">
-                        </div>
-                        <div class="col-xs-12 col-sm-3">
-                            <input type="number" id="addPrice" class="fullwidth" placeholder="Price">
-                        </div>
-                        <div class="col-xs-12 col-sm-3">
-                            <input type="number" id="addQuantity" class="fullwidth" placeholder="Quantity">
+                <form class="add-item">
 
-                        </div>
-                    </div>
-                </div>
-                <div class="btn btn-success">Add Item</div>
+                  <div id="addNew">
+                      <div class="row">
+                          <div class="col-xs-12 col-sm-6">
+                              <input type="text" id="addName" class="fullwidth" placeholder="Additional item">
+                          </div>
+                          <div class="col-xs-12 col-sm-3">
+                              <input type="number" id="addPrice" class="fullwidth" placeholder="Price">
+                          </div>
+                          <div class="col-xs-12 col-sm-3">
+                              <input type="number" id="addQuantity" class="fullwidth" placeholder="Quantity">
+
+                          </div>
+                      </div>
+                  </div>
+                  <button class="btn btn-success" type="submit">Add Item</button>
+
+                </form>
             </div>
 
             <ul id="list"></ul>

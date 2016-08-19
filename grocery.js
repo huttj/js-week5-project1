@@ -40,12 +40,16 @@ $(document).ready(function() {
     var $addName     = $('#addName');
     var $addPrice    = $('#addPrice');
     var $addQuantity = $('#addQuantity');
+    var $total       = $('.totalCost').find('span');
 
     displayGroceryItems();
 
     //2. Use the inputs and add button to add grocery items to the beginning of the list.
     // Default status should be "needed". The item should appear above the existing grocery items.
-    $('.btn.btn-success').click(function() {
+    $('.add-item').submit(function(event) {
+
+      // Don't send the form to the server, or refresh the page
+      event.preventDefault();
 
       var newItem = {
         name     : $addName.val(),
@@ -71,7 +75,6 @@ $(document).ready(function() {
         }
       }
 
-
       groceries.unshift(newItem);
 
       // This SETs the value of the input (in this case, and empty string)
@@ -79,7 +82,7 @@ $(document).ready(function() {
       $addPrice.val('');
       $addQuantity.val('');
 
-      $list.empty();
+
 
       displayGroceryItems();
 
@@ -87,18 +90,41 @@ $(document).ready(function() {
 
 
     //3. Make sure that the grocery list displayed updates when you add an item to the list.
+    // DONE!
 
     //3. Display the total cost of the groceries. Make sure this updates as you add items to the list.
 
+
     //4. Put a check in to make sure users aren't adding items without a name, price, or quantity.
 
+    $list.on('click', 'li', function removeItem() {
+        var i = $(this).data('id');
+
+        groceries.splice(i, 1);
+
+        displayGroceryItems();
+    });
 
     function displayGroceryItems() {
+
+      $list.empty();
+
+      var total = 0;
+
       for (var i = 0; i < groceries.length; i++) {
+
           var item = groceries[i];
-          var $li = $('<li></li>').text(item.name + ' (' + item.quantity + ' @ $' + item.price + ') -- ' + item.status);
+          var $li = $('<li></li>')
+            .text(item.name + ' (' + item.quantity + ' @ $' + item.price + ') -- ' + item.status)
+            .data('id', i);
           $list.append($li);
+
+          total += item.quantity * item.price;
+
       }
+
+      $total.text(total.toFixed(2));
+
     }
 
 });
