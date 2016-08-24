@@ -36,13 +36,21 @@ $(document).ready(function() {
     // in an unordered list in the "list" id that already exists in grocery.html.
     // Display each item's name, price, and quantity.
     // Ex: Tomatoes (5) @ $3.99
-    var $list        = $("#list");
-    var $addName     = $('#addName');
-    var $addPrice    = $('#addPrice');
-    var $addQuantity = $('#addQuantity');
-    var $total       = $('.totalCost').find('span');
+    var $list         = $("#list");
+    var $addName      = $('#addName');
+    var $addPrice     = $('#addPrice');
+    var $addQuantity  = $('#addQuantity');
+    var $total        = $('.totalCost').find('span');
+    var $notification = $('#notification').hide();
+    var $message      = $notification.children().eq(0);
+
+    $('.close').on('click', function() {
+      $notification.slideUp();
+    });
 
     displayGroceryItems();
+
+    sendMessage('Add a new grocery item to the list!');
 
     //2. Use the inputs and add button to add grocery items to the beginning of the list.
     // Default status should be "needed". The item should appear above the existing grocery items.
@@ -70,8 +78,18 @@ $(document).ready(function() {
       for (var i = 0; i < required.length; i++) {
         var prop = required[i];
         if (newItem[prop] === '') {
-          alert(prop + ' cannot be empty');
+          sendMessage(prop + ' cannot be empty');
           return;
+        }
+      }
+
+      for (var i = 0; i < groceries.length; i++) {
+        var item = groceries[i];
+        if (newItem.name === item.name && newItem.price === item.price) {
+          sendMessage('We\'re combining the ' + newItem.name + ' with the one(s) already in your cart.');
+          newItem.quantity = parseFloat(newItem.quantity) + parseFloat(item.quantity);
+          groceries.splice(i, 1);
+          break;
         }
       }
 
@@ -81,7 +99,6 @@ $(document).ready(function() {
       $addName.val('');
       $addPrice.val('');
       $addQuantity.val('');
-
 
 
       displayGroceryItems();
@@ -114,17 +131,28 @@ $(document).ready(function() {
       for (var i = 0; i < groceries.length; i++) {
 
           var item = groceries[i];
+
+          // Create new item element for this
           var $li = $('<li></li>')
             .text(item.name + ' (' + item.quantity + ' @ $' + item.price + ') -- ' + item.status)
             .data('id', i);
+
+          // Add to the list
           $list.append($li);
 
+          // Keep track of the total
           total += item.quantity * item.price;
 
       }
 
+      // Update the total
       $total.text(total.toFixed(2));
 
+    }
+
+    function sendMessage(str) {
+      $message.text(str);
+      $notification.slideDown();
     }
 
 });

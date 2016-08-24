@@ -212,3 +212,24 @@ li {
 	width: 100%;
 	margin: 40px auto;
 }
+
+#notification {
+  background: palegoldenrod;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+}
+
+#notification p {
+  padding: 1em;
+  margin: 0;
+}
+
+#notification .close {
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  padding: 0;
+  margin: 0;
+}
